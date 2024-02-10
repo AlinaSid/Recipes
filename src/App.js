@@ -10,12 +10,11 @@ function App() {
   const [MySearch,setMySearch]= useState("");
   const [MyRecipes,setMyRecipes]=useState([]);
 
-  // const MY_ID ="af7a0d97";
-  // const MY_KEY = "%204e8696da3ba97e3073949460db305d40%09%E2%80%94";
+
 
   useEffect(()=>{
  const getRecipe = async ()=>{
-  const responce = await fetch ('https://api.edamam.com/api/recipes/v2?type=public&q=avocado&app_id=af7a0d97&app_key=%204e8696da3ba97e3073949460db305d40%09%E2%80%94');
+  const responce = await fetch ('https://api.edamam.com/api/recipes/v2?type=public&q=chicken&app_id=cb97943c&app_key=%202ad8b6291aac2566ddbed60a042c9ee0%09%E2%80%94');
   const data= await responce.json();
   setMyRecipes(data.hits)
  }
