@@ -9,27 +9,30 @@ function App() {
 
   const [MySearch,setMySearch]= useState("");
   const [MyRecipes,setMyRecipes]=useState([]);
+  const [wordSubmitted, SetWordSubmitted] =useState("avocado")
 
 
 
   useEffect(()=>{
  const getRecipe = async ()=>{
-  const responce = await fetch ('https://api.edamam.com/api/recipes/v2?type=public&q=chicken&app_id=cb97943c&app_key=%202ad8b6291aac2566ddbed60a042c9ee0%09%E2%80%94');
+  const responce = await fetch ('https://api.edamam.com/api/recipes/v2?type=public&q=avocado&app_id=93a2c545&app_key=45be8d723b6b1a7a62ee8b189ecb0604');
   const data= await responce.json();
   setMyRecipes(data.hits)
+  console.log(data.hits)
  }
 getRecipe()
-},[])
+},[wordSubmitted])
 
 
 const MyRecipSearch = (e)=> {
 console.log(e.target.value)
 setMySearch(e.target.value)
-
-
 }
 
-
+const finalSearch =(e)=>{
+e.preventDefault()
+SetWordSubmitted(MySearch)
+}
 
   return (
     <div className="App">
@@ -41,7 +44,7 @@ setMySearch(e.target.value)
    </div>
 
    <div className='container'>
-     <form>
+     <form onSubmit={finalSearch}>
          <input className='search' placeholder='search...' onChange={MyRecipSearch} value={MySearch}/>
     </form>
 </div>
@@ -52,8 +55,13 @@ setMySearch(e.target.value)
       </button>
 </div>
 
-{MyRecipes.map(element => (
-  <MyRecipesComponent/>
+
+{MyRecipes.map((element, index) => (
+  <MyRecipesComponent  key={index}
+  label={element.recipe.label} 
+  image={element.recipe.image} 
+  calories={element.recipe.calories} 
+  ingredients={element.recipe.ingredientLines}/>
 ))}
 
 
